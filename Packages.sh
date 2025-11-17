@@ -144,6 +144,16 @@ UPDATE_VERSION "luci-app-passwall2"
 UPDATE_VERSION "luci-app-store"
 UPDATE_VERSION "luci-app-openclash"
 
+
+# 解决 quickstart 插件编译提示不支持压缩
+if [ -f "package/feeds/nas_luci/luci-app-quickstart/Makefile" ]; then
+    # 修正路径，从nas_luci源中查找该插件
+    sed -i 's/DEPENDS:=+luci-base/DEPENDS:=+luci-base\n    NO_MINIFY=1/' "package/feeds/nas_luci/luci-app-quickstart/Makefile"
+    echo "✅ 成功修改 quickstart 插件配置"
+else
+    echo "ℹ️ 未找到 quickstart 插件的 Makefile，跳过修改"
+fi
+
 #预置OpenClash内核和数据
 if [ -d *"openclash"* ]; then
         echo "预置OpenClash内核和数据!"
