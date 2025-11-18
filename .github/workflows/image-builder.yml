@@ -167,12 +167,7 @@ jobs:
         id: package
         run: |
           cd openwrt
-          cp -f "defconfig/mt7981-ax3000.config" "$GITHUB_WORKSPACE/defconfig/mt7981-ax3000.config"
-          echo "已复制$CONFIG_SOURCE到项目根目录的defconfig.config"
           make defconfig
-          #cp -f "$CONFIG_SOURCE" "defconfig.config"
-
-
           make download -j8
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
