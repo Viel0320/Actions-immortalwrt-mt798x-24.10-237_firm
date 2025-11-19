@@ -63,7 +63,7 @@ UPDATE_PACKAGE "passwall2" "xiaorouji/openwrt-passwall2" "main" "pkg"
 UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 
 #UPDATE_PACKAGE "istore" "linkease/istore" "main" "pgk"
-#UPDATE_PACKAGE "quickstart" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "quickstart" "kenzok8/small-package" "main" "pkg"
 #UPDATE_PACKAGE "istorex" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "ssr-plus" "fw876/helloworld" "master"
 
@@ -96,7 +96,7 @@ UPDATE_PACKAGE "luci-app-zerotier" "kiddin9/kwrt-packages" "main" "pkg"
 UPDATE_PACKAGE "luci-theme-argon" "kiddin9/kwrt-packages" "main" "pkg"
 #UPDATE_PACKAGE "luci-app-easymesh" "kiddin9/kwrt-packages" "main" "pkg"
 
-UPDATE_PACKAGE "quickstart" "kiddin9/kwrt-packages" "main" "pkg"
+#UPDATE_PACKAGE "quickstart" "kiddin9/kwrt-packages" "main" "pkg"
 UPDATE_PACKAGE "luci-app-quickstart" "kiddin9/kwrt-packages" "main" "pkg"
 #更新软件包版本
 UPDATE_VERSION() {
