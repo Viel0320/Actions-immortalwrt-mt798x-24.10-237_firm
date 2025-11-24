@@ -24,11 +24,7 @@ date_version=$(date +"%Y年%m月%d日")
 #添加编译日期
 COMPILE_DATE=$(date +"%Y年%m月%d日")
 
-#sed -i "s/%C/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/usr/lib/os-release  
-#sed -i "s/%C/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/etc/openwrt_release
 
-#sed -i "s/%R/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/usr/lib/os-release  
-#sed -i "s/%R/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/etc/openwrt_release
 
 
 
@@ -48,6 +44,12 @@ sed -i "s/%D/ openwrt/g" package/base-files/files/etc/openwrt_release
 
 sed -i "s/%V/ 24.10.4 /g" package/base-files/files/usr/lib/os-release
 sed -i "s/%V/ 24.10.4    编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz//g" package/base-files/files/etc/openwrt_release
+
+sed -i "s/%C/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/usr/lib/os-release  
+sed -i "s/%C/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/etc/openwrt_release
+
+sed -i "s/%R/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/usr/lib/os-release  
+sed -i "s/%R/   编译日期： ${COMPILE_DATE}  by 微信:Mr___zjz/g" package/base-files/files/etc/openwrt_release
 
 # Add the default password for the 'root' user（Change the empty password to 'password'）
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
