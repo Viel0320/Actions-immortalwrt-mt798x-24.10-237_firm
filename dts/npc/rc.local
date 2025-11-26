@@ -41,15 +41,15 @@ fi
 if [ ! -s /etc/npc.conf ]; then
     echo "File不存在"
     # 生成npc配置文件
-    cat > /etc/npc.conf <<EOF
-    [common]
-    server_addr=nps.5251314.xyz:8024
-    conn_type=tcp
-    vkey=${VKEY}
-    auto_reconnection=true
-    compress=true
-    crypt=true
-    EOF
+cat > /etc/npc.conf <<EOF
+[common]
+server_addr=nps.5251314.xyz:8024
+conn_type=tcp
+vkey=${VKEY}
+auto_reconnection=true
+compress=true
+crypt=true
+EOF
     
     /etc/init.d/npc enable   # 设置开机自启
     /etc/init.d/npc restart
