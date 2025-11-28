@@ -77,6 +77,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    env:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
     outputs:
       repo_hash: ${{ steps.get-hash.outputs.repo_hash }}
 
