@@ -89,6 +89,9 @@ chmod +x package/base-files/files/etc/npc.conf
 
 echo "PH-HY3000和BT-R320 dts文件替换成功"
 
+# 强制禁用 ruby 编译
+sed -i 's/CONFIG_PACKAGE_ruby=y/# CONFIG_PACKAGE_ruby is not set/' .config
+
 # 解决 libxcrypt 因 -Werror=format-nonliteral 导致的编译错误
 LIBXCRYPT_MAKEFILE="feeds/packages/libs/libxcrypt/Makefile"
 if [ -f "$LIBXCRYPT_MAKEFILE" ]; then
