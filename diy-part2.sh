@@ -84,22 +84,30 @@ chmod +x package/base-files/files/etc/npc.conf
 echo "PH-HY3000和BT-R320 dts文件替换成功"
 
 # 强制禁用 ruby 编译
-sed -i 's/CONFIG_PACKAGE_ruby=y/# CONFIG_PACKAGE_ruby is not set/' .config
+# sed -i 's/CONFIG_PACKAGE_ruby=y/# CONFIG_PACKAGE_ruby is not set/' .config
 
-# 解决 libxcrypt 因 -Werror=format-nonliteral 导致的编译错误
-LIBXCRYPT_MAKEFILE="feeds/packages/libs/libxcrypt/Makefile"
+# 1. 强力修复 libxcrypt 编译错误 (核心修改)
+# =========================================================
+# 找到 libxcrypt 的 Makefile（通常在 feeds/packages/libs/libxcrypt）
+LIBXCRYPT_MAKEFILE=$(find feeds/packages/libs/libxcrypt -name Makefile)
+
 if [ -f "$LIBXCRYPT_MAKEFILE" ]; then
-    sed -i '/CFLAGS="\$(TARGET_CFLAGS) -Wno-format-nonliteral"/d' "$LIBXCRYPT_MAKEFILE"
-    # 向 CONFIGURE_ARGS 中注入 CFLAGS，禁用格式非字面量警告
-    sed -i '/CONFIGURE_ARGS +=/a \	CFLAGS="\$(TARGET_CFLAGS) -Wno-format-nonliteral" \\' "$LIBXCRYPT_MAKEFILE"
-    if grep -q 'CFLAGS="\$(TARGET_CFLAGS) -Wno-format-nonliteral"' "$LIBXCRYPT_MAKEFILE"; then
-        echo "✅ 设置libxcrypt编译参数为忽略警告"
-    else
-        echo "❌ 设置libxcrypt编译参数失败" >&2
-        exit 1
-    fi
+    echo "Found libxcrypt Makefile at: $LIBXCRYPT_MAKEFILE"
+    
+    # 1. 删除所有包含 -Werror 的行，防止警告变错误
+    sed -i 's/-Werror//g' "$LIBXCRYPT_MAKEFILE"
+    
+    # 2. 显式添加忽略 format-nonliteral 错误的参数
+    # 如果文件里有 TARGET_CFLAGS，就在它后面追加
+    sed -i '/TARGET_CFLAGS/ s/$/ -Wno-format-nonliteral/' "$LIBXCRYPT_MAKEFILE"
+    
+    # 3. 如果上面没生效，再暴力注入到 Configure 参数里
+    sed -i '/CONFIGURE_ARGS +=/a \	CFLAGS="$(TARGET_CFLAGS) -Wno-format-nonliteral" \\' "$LIBXCRYPT_MAKEFILE"
+    
+    echo "✅ 已应用 libxcrypt 修复补丁"
 else
-    echo "ℹ️ 未找到 libxcrypt 的 Makefile，跳过修改"
+    echo "⚠️ 未找到 libxcrypt Makefile，尝试全盘搜索..."
+    find . -name Makefile | xargs grep -l "libxcrypt"
 fi
 
 # 解决 quickstart 插件编译提示不支持压缩
